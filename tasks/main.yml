@@ -27,3 +27,15 @@
       path: "{{ inputrc | dirname }}"
       state: directory
     when: inputrc is defined
+
+  - name: CONFIGURE | Ensure incremental history searching is configured in inputrc
+    ansible.builtin.blockinfile:
+      path: "{{ inputrc }}"
+      create: True
+      append_newline: True
+      prepend_newline: True
+      marker: "# {mark} Enable incremental history searching"
+      block: |
+        "\e[A": history-search-backward
+        "\e[B": history-search-forward
+    when: inputrc is defined
