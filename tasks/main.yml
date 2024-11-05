@@ -1,0 +1,16 @@
+---
+- name: CONFIGURE | Bash
+  tags:
+  - configure
+  block:
+  - name: CONFIGURE | Configure HISTSIZE
+    ansible.builtin.lineinfile:
+      path: "{{ bashrc }}"
+      regexp: "^HISTSIZE="
+      line: "HISTSIZE={{ HISTSIZE }}"
+
+  - name: CONFIGURE | Configure HISTFILESIZE
+    ansible.builtin.lineinfile:
+      path: "{{ bashrc }}"
+      regexp: "^HISTFILESIZE="
+      line: "HISTFILESIZE={{ HISTFILESIZE }}"

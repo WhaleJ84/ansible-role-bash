@@ -1,0 +1,4 @@
+---
+bashrc: "{{ ansible_user_dir }}/.bashrc"
+HISTSIZE: 1000
+HISTFILESIZE: 2000
