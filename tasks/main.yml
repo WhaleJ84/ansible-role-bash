@@ -42,3 +42,26 @@
         "\e[A": history-search-backward
         "\e[B": history-search-forward
     when: inputrc is defined
+
+  - name: CONFIGURE | Ensure HISTFILE path exists
+    ansible.builtin.file:
+      path: "{{ HISTFILE | dirname }}"
+      state: directory
+    when: HISTFILE is defined
+
+  - name: CONFIGURE | Move existing bash_history if it exists
+    ansible.builtin.command:
+      cmd: "mv {{ ansible_user_dir }}/.bash_history {{ HISTFILE }}"
+      creates: "{{ HISTFILE }}"
+    when: HISTFILE is defined
+
+  - name: CONFIGURE | Ensure HISTFILE is configured in bashrc
+    ansible.builtin.blockinfile:
+      path: "{{ bashrc }}"
+      append_newline: True
+      prepend_newline: True
+      marker: "# {mark} Define new location for bash_history"
+      block: |
+        HISTFILE={{ HISTFILE }}
+    when: HISTFILE is defined
+    
