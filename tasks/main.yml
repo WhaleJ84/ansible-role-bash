@@ -14,3 +14,9 @@
       path: "{{ bashrc }}"
       regexp: "^HISTFILESIZE="
       line: "HISTFILESIZE={{ HISTFILESIZE }}"
+
+  - name: CONFIGURE | Configure INPUTRC
+    ansible.builtin.lineinfile:
+      path: "{{ bashrc }}"
+      regexp: "^INPUTRC="
+      line: "INPUTRC={{ inputrc }}"
