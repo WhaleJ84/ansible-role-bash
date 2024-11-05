@@ -64,4 +64,15 @@
       block: |
         HISTFILE={{ HISTFILE }}
     when: HISTFILE is defined
+
+  - name: CONFIGURE | Ensure PROMPT_COMMAND is configured
+    ansible.builtin.blockinfile:
+      path: "{{ bashrc }}"
+      append_newline: True
+      prepend_newline: True
+      marker: "# {mark} Define new command prompt"
+      block: |
+        PROMPT_COMMAND={{ PROMPT_COMMAND }}
+    when: PROMPT_COMMAND is defined
+
     
