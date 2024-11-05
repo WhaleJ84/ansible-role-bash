@@ -1,5 +1,4 @@
 ---
 bashrc: "{{ ansible_user_dir }}/.bashrc"
-inputrc: "{{ ansible_user_dir }}/.inputrc"
 HISTSIZE: 1000
 HISTFILESIZE: 2000

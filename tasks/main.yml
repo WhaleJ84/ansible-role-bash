@@ -20,3 +20,10 @@
       path: "{{ bashrc }}"
       regexp: "^INPUTRC="
       line: "INPUTRC={{ inputrc }}"
+    when: inputrc is defined
+
+  - name: CONFIGURE | Ensure inputrc path exists
+    ansible.builtin.file:
+      path: "{{ inputrc | dirname }}"
+      state: directory
+    when: inputrc is defined
