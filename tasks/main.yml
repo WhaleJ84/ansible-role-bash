@@ -16,10 +16,13 @@
       line: "HISTFILESIZE={{ HISTFILESIZE }}"
 
   - name: CONFIGURE | Configure INPUTRC
-    ansible.builtin.lineinfile:
+    ansible.builtin.blockinfile:
       path: "{{ bashrc }}"
-      regexp: "^INPUTRC="
-      line: "INPUTRC={{ inputrc }}"
+      append_newline: True
+      prepend_newline: True
+      marker: "# {mark} inputrc"
+      block: |
+        INPUTRC={{ inputrc }}
     when: inputrc is defined
 
   - name: CONFIGURE | Ensure inputrc path exists
