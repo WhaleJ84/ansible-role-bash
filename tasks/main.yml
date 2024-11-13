@@ -85,3 +85,16 @@
         set -o vi
     when: vi is defined
 
+  - name: CONFIGURE | Ensure bash cursor prompt works with vim mode
+    ansible.builtin.blockinfile:
+      path: "{{ inputrc }}"
+      create: True
+      append_newline: True
+      prepend_newline: True
+      marker: "# {mark} Change cursor prompt in line with vim mode"
+      block: |
+        set show-mode-in-prompt on
+        set vi-cmd-mode-string "\1\e[2 q\2"
+        set vi-ins-mode-string "\1\e[6 q\2"
+    when: vi is defined and inputrc is defined
+
