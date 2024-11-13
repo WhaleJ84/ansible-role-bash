@@ -75,4 +75,13 @@
         PROMPT_COMMAND={{ PROMPT_COMMAND }}
     when: PROMPT_COMMAND is defined
 
-    
+  - name: CONFIGURE | Ensure Vim mode is configured 
+    ansible.builtin.blockinfile:
+      path: "{{ bashrc }}"
+      append_newline: True
+      prepend_newline: True
+      marker: "# {mark} Enable vim mode"
+      block: |
+        set -o vi
+    when: vi is defined
+
