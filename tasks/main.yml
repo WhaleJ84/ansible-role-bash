@@ -86,8 +86,8 @@
         prepend_newline: true
         marker: "# {mark} Define new command prompt"
         block: |
-          PROMPT_COMMAND={{ PROMPT_COMMAND }}
-      when: PROMPT_COMMAND is defined
+          PROMPT_COMMAND={{ prompt_command }}
+      when: prompt_command is defined
 
     - name: CONFIGURE | Ensure Vim mode is configured
       ansible.builtin.blockinfile:
