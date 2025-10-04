@@ -1,105 +1,105 @@
 ---
 - name: CONFIGURE | Bash
   tags:
-  - configure
+    - configure
   block:
-  - name: CONFIGURE | Configure HISTSIZE
-    ansible.builtin.lineinfile:
-      path: "{{ bashrc }}"
-      regexp: "^HISTSIZE="
-      line: "HISTSIZE={{ HISTSIZE }}"
+    - name: CONFIGURE | Configure HISTSIZE
+      ansible.builtin.lineinfile:
+        path: "{{ bashrc }}"
+        regexp: "^HISTSIZE="
+        line: "HISTSIZE={{ HISTSIZE }}"
 
-  - name: CONFIGURE | Configure HISTFILESIZE
-    ansible.builtin.lineinfile:
-      path: "{{ bashrc }}"
-      regexp: "^HISTFILESIZE="
-      line: "HISTFILESIZE={{ HISTFILESIZE }}"
+    - name: CONFIGURE | Configure HISTFILESIZE
+      ansible.builtin.lineinfile:
+        path: "{{ bashrc }}"
+        regexp: "^HISTFILESIZE="
+        line: "HISTFILESIZE={{ HISTFILESIZE }}"
 
-  - name: CONFIGURE | Configure INPUTRC
-    ansible.builtin.blockinfile:
-      path: "{{ bashrc }}"
-      append_newline: True
-      prepend_newline: True
-      marker: "# {mark} inputrc"
-      block: |
-        INPUTRC={{ inputrc }}
-    when: inputrc is defined
+    - name: CONFIGURE | Configure INPUTRC
+      ansible.builtin.blockinfile:
+        path: "{{ bashrc }}"
+        append_newline: True
+        prepend_newline: True
+        marker: "# {mark} inputrc"
+        block: |
+          INPUTRC={{ inputrc }}
+      when: inputrc is defined
 
-  - name: CONFIGURE | Ensure inputrc path exists
-    ansible.builtin.file:
-      path: "{{ inputrc | dirname }}"
-      state: directory
-    when: inputrc is defined
+    - name: CONFIGURE | Ensure inputrc path exists
+      ansible.builtin.file:
+        path: "{{ inputrc | dirname }}"
+        state: directory
+      when: inputrc is defined
 
-  - name: CONFIGURE | Ensure incremental history searching is configured in inputrc
-    ansible.builtin.blockinfile:
-      path: "{{ inputrc }}"
-      create: True
-      append_newline: True
-      prepend_newline: True
-      marker: "# {mark} Enable incremental history searching"
-      block: |
-        "\e[A": history-search-backward
-        "\e[B": history-search-forward
-    when: inputrc is defined
+    - name: CONFIGURE | Ensure incremental history searching is configured in inputrc
+      ansible.builtin.blockinfile:
+        path: "{{ inputrc }}"
+        create: True
+        append_newline: True
+        prepend_newline: True
+        marker: "# {mark} Enable incremental history searching"
+        block: |
+          "\e[A": history-search-backward
+          "\e[B": history-search-forward
+      when: inputrc is defined
 
-  - name: CONFIGURE | Ensure HISTFILE path exists
-    ansible.builtin.file:
-      path: "{{ HISTFILE | dirname }}"
-      state: directory
-    when: HISTFILE is defined
+    - name: CONFIGURE | Ensure HISTFILE path exists
+      ansible.builtin.file:
+        path: "{{ HISTFILE | dirname }}"
+        state: directory
+      when: HISTFILE is defined
 
-  - name: REGISTER | Verify whether HISTFILE exists
-    ansible.builtin.stat:
-      path: "{{ HISTFILE }}"
-    register: hf
+    - name: REGISTER | Verify whether HISTFILE exists
+      ansible.builtin.stat:
+        path: "{{ HISTFILE }}"
+      register: hf
 
-  - name: CONFIGURE | Move existing bash_history if it exists
-    ansible.builtin.command:
-      cmd: "mv {{ ansible_user_dir }}/.bash_history {{ HISTFILE }}"
-      creates: "{{ HISTFILE }}"
-    when: HISTFILE is defined and hf.stat.exists
+    - name: CONFIGURE | Move existing bash_history if it exists
+      ansible.builtin.command:
+        cmd: "mv {{ ansible_user_dir }}/.bash_history {{ HISTFILE }}"
+        creates: "{{ HISTFILE }}"
+      when: HISTFILE is defined and hf.stat.exists
 
-  - name: CONFIGURE | Ensure HISTFILE is configured in bashrc
-    ansible.builtin.blockinfile:
-      path: "{{ bashrc }}"
-      append_newline: True
-      prepend_newline: True
-      marker: "# {mark} Specify location for bash_history"
-      block: |
-        HISTFILE={{ HISTFILE }}
-    when: HISTFILE is defined
+    - name: CONFIGURE | Ensure HISTFILE is configured in bashrc
+      ansible.builtin.blockinfile:
+        path: "{{ bashrc }}"
+        append_newline: True
+        prepend_newline: True
+        marker: "# {mark} Specify location for bash_history"
+        block: |
+          HISTFILE={{ HISTFILE }}
+      when: HISTFILE is defined
 
-  - name: CONFIGURE | Ensure PROMPT_COMMAND is configured
-    ansible.builtin.blockinfile:
-      path: "{{ bashrc }}"
-      append_newline: True
-      prepend_newline: True
-      marker: "# {mark} Define new command prompt"
-      block: |
-        PROMPT_COMMAND={{ PROMPT_COMMAND }}
-    when: PROMPT_COMMAND is defined
+    - name: CONFIGURE | Ensure PROMPT_COMMAND is configured
+      ansible.builtin.blockinfile:
+        path: "{{ bashrc }}"
+        append_newline: True
+        prepend_newline: True
+        marker: "# {mark} Define new command prompt"
+        block: |
+          PROMPT_COMMAND={{ PROMPT_COMMAND }}
+      when: PROMPT_COMMAND is defined
 
-  - name: CONFIGURE | Ensure Vim mode is configured 
-    ansible.builtin.blockinfile:
-      path: "{{ bashrc }}"
-      append_newline: True
-      prepend_newline: True
-      marker: "# {mark} Enable vim mode"
-      block: |
-        set -o vi
-    when: vi is defined
+    - name: CONFIGURE | Ensure Vim mode is configured 
+      ansible.builtin.blockinfile:
+        path: "{{ bashrc }}"
+        append_newline: True
+        prepend_newline: True
+        marker: "# {mark} Enable vim mode"
+        block: |
+          set -o vi
+      when: vi is defined
 
-  - name: CONFIGURE | Ensure bash cursor prompt works with vim mode
-    ansible.builtin.blockinfile:
-      path: "{{ inputrc }}"
-      create: True
-      append_newline: True
-      prepend_newline: True
-      marker: "# {mark} Change cursor prompt in line with vim mode"
-      block: |
-        set show-mode-in-prompt on
-        set vi-cmd-mode-string "\1\e[2 q\2"
-        set vi-ins-mode-string "\1\e[6 q\2"
-    when: vi is defined and inputrc is defined
+    - name: CONFIGURE | Ensure bash cursor prompt works with vim mode
+      ansible.builtin.blockinfile:
+        path: "{{ inputrc }}"
+        create: True
+        append_newline: True
+        prepend_newline: True
+        marker: "# {mark} Change cursor prompt in line with vim mode"
+        block: |
+          set show-mode-in-prompt on
+          set vi-cmd-mode-string "\1\e[2 q\2"
+          set vi-ins-mode-string "\1\e[6 q\2"
+      when: vi is defined and inputrc is defined
 
