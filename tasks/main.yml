@@ -49,18 +49,23 @@
       state: directory
     when: HISTFILE is defined
 
+  - name: REGISTER | Verify whether HISTFILE exists
+    ansible.builtin.stat:
+      path: "{{ HISTFILE }}"
+    register: hf
+
   - name: CONFIGURE | Move existing bash_history if it exists
     ansible.builtin.command:
       cmd: "mv {{ ansible_user_dir }}/.bash_history {{ HISTFILE }}"
       creates: "{{ HISTFILE }}"
-    when: HISTFILE is defined
+    when: HISTFILE is defined and hf.stat.exists
 
   - name: CONFIGURE | Ensure HISTFILE is configured in bashrc
     ansible.builtin.blockinfile:
       path: "{{ bashrc }}"
       append_newline: True
       prepend_newline: True
-      marker: "# {mark} Define new location for bash_history"
+      marker: "# {mark} Specify location for bash_history"
       block: |
         HISTFILE={{ HISTFILE }}
     when: HISTFILE is defined
