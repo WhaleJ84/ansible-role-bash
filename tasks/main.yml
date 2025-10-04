@@ -97,7 +97,7 @@
         marker: "# {mark} Enable vim mode"
         block: |
           set -o vi
-      when: vi is defined
+        state: "{{ 'present' if vi is true else 'absent' }}"
 
     - name: CONFIGURE | Ensure bash cursor prompt works with vim mode
       ansible.builtin.blockinfile:
@@ -113,4 +113,5 @@
         owner: "{{ ansible_user_id }}"
         group: "{{ ansible_user_id }}"
         mode: "0664"
-      when: vi is defined and inputrc is defined
+        state: "{{ 'present' if vi is true else 'absent' }}"
+      when: inputrc is defined

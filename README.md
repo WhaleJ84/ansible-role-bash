@@ -26,6 +26,7 @@ Role Variables
 | HISTFILESIZE | string | A string value for the HISTFILESIZE variable | 2000 |
 | inputrc | string | A path to where inputrc should be located | |
 | prompt_command | string | A custom value for PROMPT_COMMAND | |
+| vi | boolean | Determines whether Vi mode is enabled for Bash | false |
 
 Example Playbook
 ----------------
@@ -45,5 +46,6 @@ This example playbook shows how I would use this role, with custom variables to 
         inputrc: "{{ ansible_user_dir }}/.config/bash/inputrc"
         prompt_command: |
           'PS1_CMD1=$(git branch --show-current 2>/dev/null)'; PS1='\[\033[38;5;66m\]\W\[\e[0m\]\[\033[38;5;124m\](${PS1_CMD1})\[\e[0m\]: '
+        vi: true
       tags: [bash]
 ```
