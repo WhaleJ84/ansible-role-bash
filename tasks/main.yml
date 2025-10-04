@@ -5,19 +5,19 @@
   block:
     - name: CONFIGURE | Configure HISTSIZE
       ansible.builtin.lineinfile:
-        path: "{{ bashrc }}"
+        path: "{{ shell.rc }}"
         regexp: "^HISTSIZE="
         line: "HISTSIZE={{ HISTSIZE }}"
 
     - name: CONFIGURE | Configure HISTFILESIZE
       ansible.builtin.lineinfile:
-        path: "{{ bashrc }}"
+        path: "{{ shell.rc }}"
         regexp: "^HISTFILESIZE="
         line: "HISTFILESIZE={{ HISTFILESIZE }}"
 
     - name: CONFIGURE | Configure INPUTRC
       ansible.builtin.blockinfile:
-        path: "{{ bashrc }}"
+        path: "{{ shell.rc }}"
         append_newline: true
         prepend_newline: true
         marker: "# {mark} inputrc"
@@ -71,7 +71,7 @@
 
     - name: CONFIGURE | Ensure HISTFILE is configured in bashrc
       ansible.builtin.blockinfile:
-        path: "{{ bashrc }}"
+        path: "{{ shell.rc }}"
         append_newline: true
         prepend_newline: true
         marker: "# {mark} Specify location for bash_history"
@@ -81,7 +81,7 @@
 
     - name: CONFIGURE | Ensure PROMPT_COMMAND is configured
       ansible.builtin.blockinfile:
-        path: "{{ bashrc }}"
+        path: "{{ shell.rc }}"
         append_newline: true
         prepend_newline: true
         marker: "# {mark} Define new command prompt"
@@ -91,7 +91,7 @@
 
     - name: CONFIGURE | Ensure Vim mode is configured
       ansible.builtin.blockinfile:
-        path: "{{ bashrc }}"
+        path: "{{ shell.rc }}"
         append_newline: true
         prepend_newline: true
         marker: "# {mark} Enable vim mode"

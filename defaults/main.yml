@@ -1,5 +1,6 @@
 ---
-bashrc: "{{ ansible_user_dir }}/.bashrc"
+shell:
+    rc: "{{ ansible_user_dir }}/.bashrc"
 HISTSIZE: 1000
 HISTFILESIZE: 2000
 HISTFILE: "{{ ansible_user_dir }}/.bash_history"
