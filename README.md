@@ -35,12 +35,12 @@ This example playbook shows how I would use this role, with custom variables to 
 - hosts: localhost
 
   roles:
-     - role: whalej84.bash
-       vars:
-         shell:
-           rc: "{{ ansible_user_dir }}/.bashrc"
-         HISTSIZE: ""
-         HISTFILESIZE: ""
-         inputrc: "{{ ansible_user_dir }}/.config/bash/inputrc"
-       tags: [ bash ]
+    - role: whalej84.bash
+      vars:
+        shell:
+          rc: "{{ ansible_user_dir }}/.bashrc"
+        HISTSIZE: ""
+        HISTFILESIZE: ""
+        inputrc: "{{ ansible_user_dir }}/.config/bash/inputrc"
+      tags: [bash]
 ```
