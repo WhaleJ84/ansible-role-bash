@@ -18,8 +18,8 @@
     - name: CONFIGURE | Configure INPUTRC
       ansible.builtin.blockinfile:
         path: "{{ bashrc }}"
-        append_newline: True
-        prepend_newline: True
+        append_newline: true
+        prepend_newline: true
         marker: "# {mark} inputrc"
         block: |
           INPUTRC={{ inputrc }}
@@ -34,9 +34,9 @@
     - name: CONFIGURE | Ensure incremental history searching is configured in inputrc
       ansible.builtin.blockinfile:
         path: "{{ inputrc }}"
-        create: True
-        append_newline: True
-        prepend_newline: True
+        create: true
+        append_newline: true
+        prepend_newline: true
         marker: "# {mark} Enable incremental history searching"
         block: |
           "\e[A": history-search-backward
@@ -63,8 +63,8 @@
     - name: CONFIGURE | Ensure HISTFILE is configured in bashrc
       ansible.builtin.blockinfile:
         path: "{{ bashrc }}"
-        append_newline: True
-        prepend_newline: True
+        append_newline: true
+        prepend_newline: true
         marker: "# {mark} Specify location for bash_history"
         block: |
           HISTFILE={{ HISTFILE }}
@@ -73,8 +73,8 @@
     - name: CONFIGURE | Ensure PROMPT_COMMAND is configured
       ansible.builtin.blockinfile:
         path: "{{ bashrc }}"
-        append_newline: True
-        prepend_newline: True
+        append_newline: true
+        prepend_newline: true
         marker: "# {mark} Define new command prompt"
         block: |
           PROMPT_COMMAND={{ PROMPT_COMMAND }}
@@ -83,8 +83,8 @@
     - name: CONFIGURE | Ensure Vim mode is configured 
       ansible.builtin.blockinfile:
         path: "{{ bashrc }}"
-        append_newline: True
-        prepend_newline: True
+        append_newline: true
+        prepend_newline: true
         marker: "# {mark} Enable vim mode"
         block: |
           set -o vi
@@ -93,9 +93,9 @@
     - name: CONFIGURE | Ensure bash cursor prompt works with vim mode
       ansible.builtin.blockinfile:
         path: "{{ inputrc }}"
-        create: True
-        append_newline: True
-        prepend_newline: True
+        create: true
+        append_newline: true
+        prepend_newline: true
         marker: "# {mark} Change cursor prompt in line with vim mode"
         block: |
           set show-mode-in-prompt on
