@@ -29,6 +29,9 @@
       ansible.builtin.file:
         path: "{{ inputrc | dirname }}"
         state: directory
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: "0664"
       when: inputrc is defined
 
     - name: CONFIGURE | Ensure incremental history searching is configured in inputrc
@@ -41,12 +44,18 @@
         block: |
           "\e[A": history-search-backward
           "\e[B": history-search-forward
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: "0664"
       when: inputrc is defined
 
     - name: CONFIGURE | Ensure HISTFILE path exists
       ansible.builtin.file:
         path: "{{ HISTFILE | dirname }}"
         state: directory
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: "0750"
       when: HISTFILE is defined
 
     - name: REGISTER | Verify whether HISTFILE exists
@@ -101,4 +110,7 @@
           set show-mode-in-prompt on
           set vi-cmd-mode-string "\1\e[2 q\2"
           set vi-ins-mode-string "\1\e[6 q\2"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: "0664"
       when: vi is defined and inputrc is defined
