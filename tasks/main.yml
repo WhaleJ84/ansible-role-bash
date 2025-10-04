@@ -31,7 +31,7 @@
         state: directory
         owner: "{{ ansible_user_id }}"
         group: "{{ ansible_user_id }}"
-        mode: "0664"
+        mode: "0700"
       when: inputrc is defined
 
     - name: CONFIGURE | Ensure incremental history searching is configured in inputrc
