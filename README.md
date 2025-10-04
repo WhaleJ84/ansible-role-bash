@@ -24,6 +24,7 @@ Role Variables
 | bashrc | string | A path to where bashrc is located | "$HOME/.bashrc" |
 | HISTSIZE | string | A string value for the HISTSIZE variable | 1000 |
 | HISTFILESIZE | string | A string value for the HISTFILESIZE variable | 2000 |
+| inputrc | string | A path to where inputrc should be located | |
 
 Example Playbook
 ----------------
@@ -38,5 +39,6 @@ This example playbook shows how I would use this role, with custom variables to 
        vars:
          HISTSIZE: ""
          HISTFILESIZE: ""
+         inputrc: "{{ ansible_user_dir }}/.config/bash/inputrc"
        tags: [ bash ]
 ```
